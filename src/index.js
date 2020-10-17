@@ -26,26 +26,29 @@ module.exports = function check(str, bracketsConfig) {
     
       for (i = 0; i < str.length; i++) {
         character = str[i];
-    
+        let j = i + 1;
         if (closingBrackets.indexOf(character) > -1) { //если в строке есть закрывающая скобка
-           /*let closingOne = closingBrackets[closingBrackets.indexOf(character)];
-          console.log(closingOne);
-          
-          console.log('что попало в стек:', stack); */
-          matchingOpeningBracket = openingBrackets[closingBrackets.indexOf(character)]; //у закрывающих и открыающих совпадают индексы в своих массивах
-          // поэтому если есть закрывающая, то переменной присваивается значение аналогичной открывающей
-          
-          console.log('openingOne:', matchingOpeningBracket);
-          console.log(stack.length);
-          if (stack.length === 0 || (stack.pop() != matchingOpeningBracket)) { 
-            // если стек пустой или верхний элемент не совпадает с записанной открывающей скобкой
-            console.log('false');
-            return false;
-            
+          if ((openingBrackets.indexOf(character) > -1) && (stack.indexOf(character) === -1)) { 
+            // если открывающая - такого же вида + ее еще нет в стеке
+            stack.push(character); // поместить ее в стек
+          } else {
+            matchingOpeningBracket = openingBrackets[closingBrackets.indexOf(character)]; //у закрывающих и открыающих совпадают индексы в своих массивах
+            // поэтому если есть закрывающая, то переменной присваивается значение аналогичной открывающей
+           
+            console.log('openingOne:', matchingOpeningBracket);
+            console.log(stack.length);
+            if (stack.length === 0 || (stack.pop() != matchingOpeningBracket)) { 
+              // если стек пустой или верхний элемент не совпадает с записанной открывающей скобкой
+              // ...или скобки одинакового начертания
+              //console.log('false');
+              return false;
+              
+            }
           }
+         
         } else {
           stack.push(character); 
-          console.log(stack);
+          //console.log(stack);
         }
       }
       console.log (stack.length === 0);
@@ -55,3 +58,4 @@ module.exports = function check(str, bracketsConfig) {
     
 
 
+ // нужна проверка на случай совпадения открывающей и закрывающей!
